@@ -1,16 +1,24 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse
 from .models import Question
-from django.core.serializers import serialize
+from .models import QuestionForm
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     polls = Question.objects.all()[:20]
     data = {"results": list(polls.values("question_text", "pub_date"))}
     return JsonResponse(data)
 
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+@csrf_exempt
+def SaveNew(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'saved'})
+        else:
+            return JsonResponse({'message': 'failed'})
+
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."

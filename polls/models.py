@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.forms import ModelForm
 from django.utils import timezone
 
 
@@ -21,3 +22,8 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class QuestionForm(ModelForm):
+    class Meta:
+        model = Question
+        fields = ['question_text', 'pub_date']
