@@ -5,7 +5,7 @@ urlpatterns = [
     # ex: /polls/5/
     path('savenew/', views.SaveNew, name='saveNew'),
     # ex: /polls/5/results/
-    path('<int:question_id>/results/', views.results, name='results'),
+    path('results/', views.results, name='results'),
     # ex: /polls/5/vote/
     path('<int:question_id>/vote/', views.vote, name='vote'),
 ]
